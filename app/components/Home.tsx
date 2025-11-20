@@ -26,7 +26,7 @@ const Home = () => {
   return (
     <div>
       <div className="relative h-screen w-full flex items-center justify-center px-4 sm:px-6 md:px-8">
-        <Image src="/TinyUrlBg.png" alt="bg" fill className="object-cover" />
+        <Image src="/TinyUrlBg.png" alt="bg" fill className="object-cover select-none" />
 
         <div
           className="z-10 text-[2.8rem]  md:text-6xl lg:text-7xl xl:text-[5.5rem] leading-[0.9] text-center max-w-6xl"

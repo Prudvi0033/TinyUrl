@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { DashboardSkeleton } from "./DashboardSkeleton";
 import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 const jost = Jost({ subsets: ["latin"] });
 
@@ -177,7 +178,7 @@ const Dashboard = () => {
                           <Clipboard size={14} />
                         )}
                       </span>
-                      <span className="bg-neutral-700 p-2 rounded-lg hover:bg-neutral-600 cursor-pointer transition-all">
+                      <span onClick={() => redirect(`/code/${link.code}`)} className="bg-neutral-700 p-2 rounded-lg hover:bg-neutral-600 cursor-pointer transition-all">
                         <ChartNoAxesColumn size={14} />
                       </span>
                       <span onClick={() => handleDelete(link.code)} className="bg-neutral-700 hover:text-red-700 p-2 rounded-lg hover:bg-neutral-600 cursor-pointer transition-all">
