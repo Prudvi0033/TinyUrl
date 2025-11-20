@@ -3,16 +3,17 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { code: string } }
+  context: { params: Promise<{ code: string }> }
 ) {
-  try {
-    const { code } = params;
+  const { code } = await context.params;
 
+  try {
     const link = await prisma.link.findUnique({
       where: { code },
     });
 
     if (!link) {
+      console.error("No link found for:", code);
       return NextResponse.json({ error: "Short link not found" }, { status: 404 });
     }
 
@@ -26,7 +27,10 @@ export async function GET(
 
     return NextResponse.redirect(link.redirectUrl);
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    console.error("INTERNAL REDIRECT ERROR:", error);
+    return NextResponse.json(
+      "Internal Server Error",
+      { status: 500 }
+    );
   }
 }

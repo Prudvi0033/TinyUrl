@@ -1,13 +1,17 @@
 import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET({ params }: { params: { code: string } }) {
+export async function GET(
+  req: Request,
+  context: { params: Promise<{ code: string }> }
+) {
+  console.log("🧪 GET PARAMS:", context.params);
+
   try {
-    const { code } = params;
+    const { code } = await context.params;
+
     const link = await prisma.link.findUnique({
-      where: {
-        code: code,
-      },
+      where: { code },
     });
 
     if (!link) {
@@ -16,22 +20,21 @@ export async function GET({ params }: { params: { code: string } }) {
 
     return NextResponse.json(link);
   } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    console.error("GET ERROR:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 
-export async function DELETE({ params }: { params: { code: string } }) {
+
+export async function DELETE(
+  req: Request,
+  context: { params: Promise<{ code: string }> }
+) {
   try {
-    const { code } = params;
+    const { code } = await context.params;
 
     const link = await prisma.link.findUnique({
-      where: {
-        code: code,
-      },
+      where: { code },
     });
 
     if (!link) {
@@ -44,10 +47,7 @@ export async function DELETE({ params }: { params: { code: string } }) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    console.error("DELETE ERROR:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
