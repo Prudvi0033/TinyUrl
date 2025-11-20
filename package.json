@@ -6,7 +6,7 @@
     "dev": "next dev --webpack",
 
     "build": "npx next build --webpack",
-    "start": "next start",
+    "start": "next start --webpack",
     "lint": "eslint"
   },
   "dependencies": {
