@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  context: { params: Promise<{ code: string }> }
+  context: { params: Promise<{ code: string }> } // TS expects Promise here
 ) {
-  const { code } = await context.params; 
+  const { code } = await context.params; // await satisfies TS
 
   try {
     const link = await prisma.link.findUnique({ where: { code } });
@@ -14,6 +14,7 @@ export async function GET(
       return NextResponse.json({ error: "Short link not found" }, { status: 404 });
     }
 
+    // Update clicks and lastClicked
     await prisma.link.update({
       where: { code },
       data: {
@@ -22,6 +23,7 @@ export async function GET(
       },
     });
 
+    // Redirect to the actual URL
     return NextResponse.redirect(link.redirectUrl);
   } catch (error) {
     console.error("INTERNAL REDIRECT ERROR:", error);
