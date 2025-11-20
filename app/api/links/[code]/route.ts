@@ -5,7 +5,6 @@ export async function GET(
   req: Request,
   context: { params: Promise<{ code: string }> }
 ) {
-  console.log("🧪 GET PARAMS:", context.params);
 
   try {
     const { code } = await context.params;
