@@ -1,5 +1,5 @@
 "use client";
-
+export const dynamic = "force-dynamic";
 import { Link } from "@/app/types/link";
 import { ArrowLeft, Calendar, MousePointer } from "lucide-react";
 import { Jost } from "next/font/google";
